@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, ElementRef, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-server-element',
@@ -7,14 +7,25 @@ import { Component, Input, OnInit } from '@angular/core';
   // encapsulation: ViewEncapsulation.None, // css defined globally
   // encapsulation: ViewEncapsulation.ShadowDom, // css defined
 })
-export class ServerElementComponent implements OnInit {
+export class ServerElementComponent implements OnInit, OnChanges {
   // @Input('srvElement') // property binding alias is srvElement
   @Input()
   element: { type: string, name: string, content: string };
 
-  constructor() { }
+  @ViewChild('heading', { static: true })
+  heading: ElementRef;
+
+  constructor() {
+    console.log('constructor called');
+  }
 
   ngOnInit(): void {
+    console.log('ngOnInit called');
+    console.log('ngOnInit called this.header', this.heading.nativeElement.textContent);
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    console.log('ngOnChanges called', changes);
   }
 
 }
