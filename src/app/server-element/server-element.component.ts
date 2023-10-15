@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
+import { AfterContentInit, Component, ContentChild, ElementRef, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-server-element',
@@ -7,7 +7,7 @@ import { Component, ElementRef, Input, OnChanges, OnInit, SimpleChanges, ViewChi
   // encapsulation: ViewEncapsulation.None, // css defined globally
   // encapsulation: ViewEncapsulation.ShadowDom, // css defined
 })
-export class ServerElementComponent implements OnInit, OnChanges {
+export class ServerElementComponent implements OnInit, OnChanges, AfterContentInit {
   // @Input('srvElement') // property binding alias is srvElement
   @Input()
   element: { type: string, name: string, content: string };
@@ -15,17 +15,25 @@ export class ServerElementComponent implements OnInit, OnChanges {
   @ViewChild('heading', { static: true })
   heading: ElementRef;
 
+  @ContentChild('contentParagraph', { static: true })
+  paragraph: ElementRef;
+
   constructor() {
     console.log('constructor called');
   }
 
   ngOnInit(): void {
     console.log('ngOnInit called');
-    console.log('ngOnInit called this.header', this.heading.nativeElement.textContent);
+    console.log('ngOnInit called this.heading', this.heading.nativeElement.textContent);
+    console.log('ngOnInit called this.paragraph', this.paragraph.nativeElement.textContent);
   }
 
   ngOnChanges(changes: SimpleChanges) {
     console.log('ngOnChanges called', changes);
   }
 
+  ngAfterContentInit(): void {
+    console.log('ngOnInit called this.heading', this.heading.nativeElement.textContent);
+    console.log('ngOnInit called this.paragraph', this.paragraph.nativeElement.textContent);
+  }
 }
